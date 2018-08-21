@@ -44,6 +44,8 @@ public class Tweet extends TwitterObject implements Serializable {
 	private Integer favoriteCount;
 	private Entities entities;
 	private TwitterProfile user;
+	private Boolean truncated;
+	private ExtendedTweet extendedTweet;
 
 	/**
 	 * Constructs a Tweet
@@ -289,6 +291,22 @@ public class Tweet extends TwitterObject implements Serializable {
 
 	public void setInReplyToScreenName(final String inReplyToScreenName) {
 		this.inReplyToScreenName = inReplyToScreenName;
+	}
+	
+	public Boolean getTruncated() {
+		return truncated;
+	}
+
+	public void setTruncated(Boolean truncated) {
+		this.truncated = truncated;
+	}
+
+	public ExtendedTweet getExtendedTweet() {
+		return extendedTweet;
+	}
+
+	public void setExtendedTweet(ExtendedTweet extendedTweet) {
+		this.extendedTweet = extendedTweet;
 	}
 
 	@Override

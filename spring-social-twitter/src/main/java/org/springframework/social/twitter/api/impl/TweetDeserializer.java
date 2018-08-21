@@ -19,13 +19,17 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.social.twitter.api.Entities;
+import org.springframework.social.twitter.api.ExtendedTweet;
 import org.springframework.social.twitter.api.TickerSymbolEntity;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.TwitterProfile;
@@ -100,6 +104,8 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 		tweet.setEntities(entities);
 		TwitterProfile user = toProfile(fromUserNode);
 		tweet.setUser(user);
+		ExtendedTweet extendedTweet =  toExtendedTweet(node.get("extended_tweet"));
+		tweet.setExtendedTweet(extendedTweet);
 		return tweet;
 	}
 
@@ -154,5 +160,26 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 
 
 	private static final String TIMELINE_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+	
+	private ExtendedTweet toExtendedTweet(final JsonNode node) throws IOException {
+		if (null == node || node.isNull() || node.isMissingNode()) {
+			return null;
+		}
+		String fullText = node.get("full_text").asText();
+		List<Integer> displayTextRange = toDisplayTextRange(node.withArray("display_text_range"));
+		Entities entities = toEntities(node.get("entities"), fullText);
+		return new ExtendedTweet(fullText, displayTextRange, entities);
+	}
 
+	private List<Integer> toDisplayTextRange(final JsonNode node) {
+		if (null == node || node.isNull() || node.isMissingNode()) {
+			return null;
+		}
+		List<Integer> displayTextRange = new ArrayList<>();
+		Iterator<JsonNode> iterator = node.iterator();	
+		while(iterator.hasNext()) {
+			displayTextRange.add(Integer.parseInt(iterator.next().toString()));
+		}
+		return displayTextRange;
+	}
 }
