@@ -24,9 +24,11 @@ import org.springframework.social.twitter.api.BlockOperations;
 import org.springframework.social.twitter.api.DirectMessageOperations;
 import org.springframework.social.twitter.api.FriendOperations;
 import org.springframework.social.twitter.api.GeoOperations;
+import org.springframework.social.twitter.api.ListExtendedOperations;
 import org.springframework.social.twitter.api.ListOperations;
 import org.springframework.social.twitter.api.SearchOperations;
 import org.springframework.social.twitter.api.StreamingOperations;
+import org.springframework.social.twitter.api.TimelineExtendedOperations;
 import org.springframework.social.twitter.api.TimelineOperations;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.UserOperations;
@@ -49,12 +51,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter {
 	
 	private TimelineOperations timelineOperations;
+	
+	private TimelineExtendedOperations timelineExtendedOperations;
 
 	private UserOperations userOperations;
 
 	private FriendOperations friendOperations;
 
 	private ListOperations listOperations;
+	
+	private ListExtendedOperations listExtendedOperations;
 
 	private SearchOperations searchOperations;
 
@@ -109,6 +115,10 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
 	public TimelineOperations timelineOperations() {
 		return timelineOperations;
 	}
+	
+	public TimelineExtendedOperations timelineExtendedOperations() {
+		return timelineExtendedOperations;
+	}
 
 	public FriendOperations friendOperations() {
 		return friendOperations;
@@ -116,6 +126,10 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
 
 	public ListOperations listOperations() {
 		return listOperations;
+	}
+	
+	public ListExtendedOperations listExtendedOperations() {
+		return listExtendedOperations;
 	}
 
 	public SearchOperations searchOperations() {
@@ -192,7 +206,9 @@ public class TwitterTemplate extends AbstractOAuth1ApiBinding implements Twitter
 		this.directMessageOperations = new DirectMessageTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
 		this.friendOperations = new FriendTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
 		this.listOperations = new ListTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
+		this.listExtendedOperations = new ListExtendedTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
 		this.timelineOperations = new TimelineTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
+		this.timelineExtendedOperations = new TimelineExtendedTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
 		this.searchOperations = new SearchTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());
 		this.blockOperations = new BlockTemplate(getRestTemplate(), isAuthorized(),isAuthorizedForApp());
 		this.geoOperations = new GeoTemplate(getRestTemplate(), isAuthorized(), isAuthorizedForApp());

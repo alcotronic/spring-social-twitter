@@ -51,6 +51,11 @@ public interface Twitter extends ApiBinding {
 	 * @return the portion of the Twitter API containing the user list operations.
 	 */
 	ListOperations listOperations();
+	
+	/**
+	 * @return the portion of the Twitter API containing the user list operations for extended tweets.
+	 */
+	ListExtendedOperations listExtendedOperations();
 
 	/**
 	 * @return the portion of the Twitter API containing the search operations.
@@ -66,6 +71,11 @@ public interface Twitter extends ApiBinding {
 	 * @return the portion of the Twitter API containing the tweet and timeline operations.
 	 */
 	TimelineOperations timelineOperations();
+	
+	/**
+	 * @return the portion of the Twitter API containing the tweet and timeline operations for extended tweets.
+	 */
+	TimelineExtendedOperations timelineExtendedOperations();
 
 	/**
 	 * @return the portion of the Twitter API containing the user operations.

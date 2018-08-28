@@ -26,6 +26,7 @@ import org.springframework.social.twitter.api.StreamDeleteEvent;
 import org.springframework.social.twitter.api.StreamListener;
 import org.springframework.social.twitter.api.StreamWarningEvent;
 import org.springframework.social.twitter.api.Tweet;
+import org.springframework.social.twitter.api.TweetExtended;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -47,6 +48,7 @@ class StreamDispatcher implements Runnable {
 		pool = Executors.newCachedThreadPool();
 		objectMapper = new ObjectMapper();
 		objectMapper.addMixIn(Tweet.class, TweetMixin.class);
+		objectMapper.addMixIn(TweetExtended.class, TweetExtendedMixin.class);
 		objectMapper.addMixIn(StreamDeleteEvent.class, StreamDeleteEventMixin.class);
 		objectMapper.addMixIn(StreamWarningEvent.class, StreamWarningEventMixin.class);
 		active = new AtomicBoolean(true);

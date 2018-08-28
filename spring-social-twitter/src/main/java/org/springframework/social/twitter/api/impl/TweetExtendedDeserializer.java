@@ -29,9 +29,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.social.twitter.api.Entities;
-import org.springframework.social.twitter.api.ExtendedTweet;
 import org.springframework.social.twitter.api.TickerSymbolEntity;
-import org.springframework.social.twitter.api.Tweet;
+import org.springframework.social.twitter.api.TweetExtended;
 import org.springframework.social.twitter.api.TwitterProfile;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -46,26 +45,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * varies between the search API and the timeline API. This deserializer determine which structure is in play and creates a tweet from it.
  * @author Craig Walls
  */
-class TweetDeserializer extends JsonDeserializer<Tweet> {
+class TweetExtendedDeserializer extends JsonDeserializer<TweetExtended> {
 
 	@Override
-	public Tweet deserialize(final JsonParser jp, final DeserializationContext ctx) throws IOException {
+	public TweetExtended deserialize(final JsonParser jp, final DeserializationContext ctx) throws IOException {
 		final JsonNode node = jp.readValueAs(JsonNode.class);
 		if (null == node || node.isMissingNode() || node.isNull()) {
 			return null;
 		}
-		final Tweet tweet = this.deserialize(node);
+		final TweetExtended tweet = this.deserialize(node);
 		jp.skipChildren();
 		return tweet;
 	}
 
 
-	public Tweet deserialize(JsonNode node) throws IOException, JsonProcessingException {
+	public TweetExtended deserialize(JsonNode node) throws IOException, JsonProcessingException {
 		final String id = node.path("id").asText();
-		final String text = node.path("text").asText();
-		if (id == null  || text == null || text.isEmpty()) {
+		final String fullText = node.path("full_text").asText();
+		if (id == null  || fullText == null || fullText.isEmpty()) {
 			return null;
 		}
+		List<Integer> displayTextRange = toDisplayTextRange(node.withArray("display_text_range"));
 		JsonNode fromUserNode = node.get("user");
 		String dateFormat = TIMELINE_DATE_FORMAT;
 		String fromScreenName = fromUserNode.get("screen_name").asText();
@@ -77,7 +77,7 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 		Long toUserId = toUserIdNode != null ? toUserIdNode.asLong() : null;
 		JsonNode languageCodeNode = node.get("lang");
 		String languageCode = languageCodeNode != null && !languageCodeNode.isNull() ? languageCodeNode.asText() : null;
-		Tweet tweet = new Tweet(id, text, createdAt, fromScreenName, fromImageUrl, toUserId, fromId, languageCode, source);
+		TweetExtended tweet = new TweetExtended(id, fullText, displayTextRange, createdAt, fromScreenName, fromImageUrl, toUserId, fromId, languageCode, source);
 		JsonNode inReplyToStatusIdNode = node.get("in_reply_to_status_id");
 		Long inReplyToStatusId = inReplyToStatusIdNode != null && !inReplyToStatusIdNode.isNull() ? inReplyToStatusIdNode.asLong() : null;
 		tweet.setInReplyToStatusId(inReplyToStatusId);
@@ -92,7 +92,7 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 		JsonNode retweetedStatusNode = node.get("retweeted_status");
 		boolean retweeted = retweetedNode != null && !retweetedNode.isNull() ? retweetedNode.asBoolean() : false;
 		tweet.setRetweeted(retweeted);
-		Tweet retweetedStatus = retweetedStatusNode != null ? this.deserialize(retweetedStatusNode) : null;
+		TweetExtended retweetedStatus = retweetedStatusNode != null ? this.deserialize(retweetedStatusNode) : null;
 		tweet.setRetweetedStatus(retweetedStatus);
 		JsonNode favoritedNode = node.get("favorited");
 		boolean favorited = favoritedNode != null && !favoritedNode.isNull() ? favoritedNode.asBoolean() : false;
@@ -100,16 +100,12 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 		JsonNode favoriteCountNode = node.get("favorite_count");
 		Integer favoriteCount = favoriteCountNode != null && !favoriteCountNode.isNull() ? favoriteCountNode.asInt() : null;
 		tweet.setFavoriteCount(favoriteCount);
-		Entities entities = toEntities(node.get("entities"), text);
+		Entities entities = toEntities(node.get("entities"), fullText);
 		tweet.setEntities(entities);
 		TwitterProfile user = toProfile(fromUserNode);
 		tweet.setUser(user);
 		Boolean truncated = node.get("truncated").asBoolean();
 		tweet.setTruncated(truncated);
-		JsonNode extendedTweetNode = node.get("extended_tweet");
-		//ExtendedTweet extendedTweet =  (truncated == true && extendedTweetNode != null && !extendedTweetNode.isNull()) ? toExtendedTweet(extendedTweetNode) : null;
-		
-		tweet.setExtendedTweet(toExtendedTweet(extendedTweetNode));
 		return tweet;
 	}
 
@@ -164,17 +160,6 @@ class TweetDeserializer extends JsonDeserializer<Tweet> {
 
 
 	private static final String TIMELINE_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-	
-	private ExtendedTweet toExtendedTweet(final JsonNode node) throws IOException {
-		if (null == node || node.isNull() || node.isMissingNode()) {
-			return null;
-		}
-		String fullText = node.get("full_text").asText();
-		System.out.println(fullText);
-		List<Integer> displayTextRange = toDisplayTextRange(node.withArray("display_text_range"));
-		Entities entities = toEntities(node.get("entities"), fullText);
-		return new ExtendedTweet(fullText, displayTextRange, entities);
-	}
 
 	private List<Integer> toDisplayTextRange(final JsonNode node) {
 		if (null == node || node.isNull() || node.isMissingNode()) {

@@ -23,7 +23,7 @@ import java.util.Date;
  *
  * @author Rosty Kerei
  */
-public class SearchParameters  {
+public class SearchParameters {
 
 	private String query;
 	private GeoCode geoCode;

@@ -27,7 +27,7 @@ import org.springframework.social.OperationNotPermittedException;
  * Interface defining the operations for sending and retrieving tweets. 
  * @author Craig Walls
  */
-public interface TimelineOperations {
+public interface TimelineExtendedOperations {
 
 	/**
 	 * Retrieves the 20 most recently posted tweets, including retweets, from
@@ -39,7 +39,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getHomeTimeline();
+	List<TweetExtended> getHomeTimeline();
 
 	/**
 	 * Retrieves tweets, including retweets, from the authenticating user's home timeline. 
@@ -49,7 +49,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getHomeTimeline(int pageSize);
+	List<TweetExtended> getHomeTimeline(int pageSize);
 
 	/**
 	 * Retrieves tweets, including retweets, from the authenticating user's home timeline. 
@@ -61,7 +61,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getHomeTimeline(int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getHomeTimeline(int pageSize, long sinceId, long maxId);
 
 	/**
 	 * Retrieves the 20 most recent tweets posted by the authenticating user.
@@ -69,7 +69,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getUserTimeline();
+	List<TweetExtended> getUserTimeline();
 
 	/**
 	 * Retrieves tweets posted by the authenticating user. The most recent tweets are listed first.
@@ -78,7 +78,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getUserTimeline(int pageSize);
+	List<TweetExtended> getUserTimeline(int pageSize);
 
 	/**
 	 * Retrieves tweets posted by the authenticating user. The most recent tweets are listed first.
@@ -89,7 +89,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getUserTimeline(int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getUserTimeline(int pageSize, long sinceId, long maxId);
 
 	/**
 	 * Retrieves the 20 most recent tweets posted by the given user.
@@ -99,7 +99,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(String screenName);
+	List<TweetExtended> getUserTimeline(String screenName);
 
 	/**
 	 * Retrieves tweets posted by the given user. The most recent tweets are listed first.
@@ -110,7 +110,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(String screenName, int pageSize);
+	List<TweetExtended> getUserTimeline(String screenName, int pageSize);
 
 	/**
 	 * Retrieves tweets posted by the given user. The most recent tweets are listed first.
@@ -123,7 +123,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(String screenName, int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getUserTimeline(String screenName, int pageSize, long sinceId, long maxId);
 
 	/**
 	 * Retrieves the 20 most recent tweets posted by the given user.
@@ -133,7 +133,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(long userId);
+	List<TweetExtended> getUserTimeline(long userId);
 
 	/**
 	 * Retrieves tweets posted by the given user. The most recent tweets are listed first.
@@ -144,7 +144,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(long userId, int pageSize);
+	List<TweetExtended> getUserTimeline(long userId, int pageSize);
 
 	/**
 	 * Retrieves tweets posted by the given user. The most recent tweets are listed first.
@@ -157,7 +157,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getUserTimeline(long userId, int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getUserTimeline(long userId, int pageSize, long sinceId, long maxId);
 	
 	/**
 	 * Retrieve the 20 most recent tweets of the authenticated user that have been retweeted by others.
@@ -165,7 +165,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getRetweetsOfMe();
+	List<TweetExtended> getRetweetsOfMe();
 	
 	/**
 	 * Retrieve tweets of the authenticated user that have been retweeted by others.  The most recent tweets are listed first.
@@ -175,7 +175,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getRetweetsOfMe(int page, int pageSize);
+	List<TweetExtended> getRetweetsOfMe(int page, int pageSize);
 	
 	/**
 	 * Retrieve tweets of the authenticated user that have been retweeted by others.  The most recent tweets are listed first.
@@ -187,7 +187,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getRetweetsOfMe(int page, int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getRetweetsOfMe(int page, int pageSize, long sinceId, long maxId);
 	
 	/**
 	 * Retrieve the 20 most recent tweets that mention the authenticated user.
@@ -195,7 +195,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getMentions();
+	List<TweetExtended> getMentions();
 
 	/**
 	 * Retrieve tweets that mention the authenticated user. The most recent tweets are listed first.
@@ -204,7 +204,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getMentions(int pageSize);
+	List<TweetExtended> getMentions(int pageSize);
 
 	/**
 	 * Retrieve tweets that mention the authenticated user. The most recent tweets are listed first.
@@ -215,7 +215,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getMentions(int pageSize, long sinceId, long maxId);
+	List<TweetExtended> getMentions(int pageSize, long sinceId, long maxId);
 
 	/**
 	 * Returns a single tweet.
@@ -225,7 +225,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	Tweet getStatus(long tweetId);
+	TweetExtended getStatus(long tweetId);
 
 	/**
 	 * Returns a single tweet as an oEmbed representation.
@@ -257,7 +257,7 @@ public interface TimelineOperations {
 	 * @throws MessageTooLongException if the length of the status message exceeds Twitter's 140 character limit.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	Tweet updateStatus(String status);
+	TweetExtended updateStatus(String status);
 	
 	/**
 	 * Updates the user's status, including any additional metadata about the status carried in TweetData
@@ -269,7 +269,7 @@ public interface TimelineOperations {
 	 * @throws OperationNotPermittedException if the photo resource isn't a GIF, JPG, or PNG.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	Tweet updateStatus(TweetData tweetData);
+	TweetExtended updateStatus(TweetData tweetData);
 	
 	/**
 	 * Removes a status entry.
@@ -286,7 +286,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	Tweet retweet(long tweetId);
+	TweetExtended retweet(long tweetId);
 
 	/**
 	 * Retrieves up to 100 retweets of a specific tweet.
@@ -296,7 +296,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getRetweets(long tweetId);
+	List<TweetExtended> getRetweets(long tweetId);
 
 	/**
 	 * Retrieves retweets of a specific tweet.
@@ -307,7 +307,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getRetweets(long tweetId, int count);
+	List<TweetExtended> getRetweets(long tweetId, int count);
 
 	/**
 	 * Retrieves the 20 most recent tweets favorited by the authenticated user.
@@ -315,7 +315,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getFavorites();
+	List<TweetExtended> getFavorites();
 
 	/**
 	 * Retrieves tweets favorited by the authenticated user.
@@ -324,7 +324,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials.
 	 */
-	List<Tweet> getFavorites(int pageSize);
+	List<TweetExtended> getFavorites(int pageSize);
 
 	/**
 	 * Retrieves the 20 most recent tweets favorited by the specified user.
@@ -334,7 +334,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getFavorites(long userId);
+	List<TweetExtended> getFavorites(long userId);
 
 	/**
 	 * Retrieves tweets favorited by the specified user.
@@ -345,7 +345,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getFavorites(long userId, int pageSize);
+	List<TweetExtended> getFavorites(long userId, int pageSize);
 
 	/**
 	 * Retrieves the 20 most recent tweets favorited by the specified user.
@@ -355,7 +355,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getFavorites(String screenName);
+	List<TweetExtended> getFavorites(String screenName);
 
 	/**
 	 * Retrieves tweets favorited by the specified user.
@@ -366,7 +366,7 @@ public interface TimelineOperations {
 	 * @throws ApiException if there is an error while communicating with Twitter.
 	 * @throws MissingAuthorizationException if TwitterTemplate was not created with OAuth credentials or an application access token.
 	 */
-	List<Tweet> getFavorites(String screenName, int pageSize);
+	List<TweetExtended> getFavorites(String screenName, int pageSize);
 
 	/**
 	 * Adds a tweet to the user's collection of favorite tweets.

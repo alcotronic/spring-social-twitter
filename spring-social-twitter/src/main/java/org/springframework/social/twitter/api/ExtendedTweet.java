@@ -6,7 +6,7 @@ package org.springframework.social.twitter.api;
 import java.util.List;
 
 /**
- * @author steffi
+ * @author Steffi Wild - alcotronic - alcotronic@gmx.de
  *
  */
 public class ExtendedTweet {
