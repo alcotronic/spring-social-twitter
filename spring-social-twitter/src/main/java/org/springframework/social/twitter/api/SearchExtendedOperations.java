@@ -24,6 +24,7 @@ import org.springframework.social.MissingAuthorizationException;
 /**
  * Interface defining the operations for searching Twitter and retrieving trending data.
  * @author Craig Walls
+ * @author Steffi Wild
  */
 public interface SearchExtendedOperations {
 	

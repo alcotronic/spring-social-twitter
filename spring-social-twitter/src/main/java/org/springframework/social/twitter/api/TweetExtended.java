@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Represents a Twitter status update (e.g., a "tweet").
  * @author Craig Walls
+ * @author Steffi Wild
  */
 public class TweetExtended extends TwitterObject implements Serializable {
 	private static final long serialVersionUID = 1L;

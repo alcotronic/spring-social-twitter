@@ -24,6 +24,7 @@ import org.springframework.social.MissingAuthorizationException;
 /**
  * Interface defining the operations for working with a user's lists.
  * @author Craig Walls
+ * @author Steffi Wild
  */
 public interface ListExtendedOperations {
 	

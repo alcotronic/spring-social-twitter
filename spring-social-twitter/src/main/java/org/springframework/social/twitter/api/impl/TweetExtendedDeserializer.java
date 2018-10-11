@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Custom Jackson deserializer for tweets. Tweets can't be simply mapped like other Twitter model objects because the JSON structure
  * varies between the search API and the timeline API. This deserializer determine which structure is in play and creates a tweet from it.
  * @author Craig Walls
+ * @author Steffi Wild
  */
 class TweetExtendedDeserializer extends JsonDeserializer<TweetExtended> {
 

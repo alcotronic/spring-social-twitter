@@ -26,6 +26,7 @@ import org.springframework.social.OperationNotPermittedException;
 /**
  * Interface defining the operations for sending and retrieving tweets. 
  * @author Craig Walls
+ * @author Steffi Wild
  */
 public interface TimelineExtendedOperations {
 

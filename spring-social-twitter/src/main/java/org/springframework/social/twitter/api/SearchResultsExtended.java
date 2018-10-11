@@ -22,6 +22,7 @@ import java.util.List;
  * and any metadata associated with that search.
  * 
  * @author Craig Walls
+ * @author Steffi Wild
  */
 public class SearchResultsExtended extends TwitterObject {
 	private List<TweetExtended> tweets;

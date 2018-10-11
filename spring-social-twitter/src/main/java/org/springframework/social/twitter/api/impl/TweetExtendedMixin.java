@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * Mixin class for adding Jackson annotations to Tweet. 
  * Relies on TweetDeserializer to do actual deserialization, as Tweet JSON structures differ slightly between timeline lists and search results.
  * @author Craig Walls
+ * @author Steffi Wild
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(using = TweetExtendedDeserializer.class)
