@@ -19,7 +19,7 @@ public class Collection extends TwitterObject {
 	 * @param tweets
 	 * @param response
 	 */
-	public Collection(Map<String, Timelines> timelines, Map<Long, org.springframework.social.twitter.api.Tweet> tweets,
+	public Collection(Map<String, Timelines> timelines, Map<Long, Tweet> tweets,
 			Response response) {
 		super();
 		this.timelines = timelines;
